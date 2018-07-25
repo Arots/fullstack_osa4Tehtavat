@@ -17,7 +17,7 @@ module.exports = Blog
 app.use(cors())
 app.use(bodyParser.json())
 
-const mongoUrl = 'mongodb://localhost/bloglist'
+const mongoUrl = process.env.MONGODB_URI
 mongoose.connect(mongoUrl)
 
 app.get('/api/blogs', (request, response) => {
