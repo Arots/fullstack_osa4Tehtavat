@@ -1,1 +1,9 @@
-GET http://localhost:3003/
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Valaan päiväkirja",
+    "author": "Mordiggan",
+    "url": "http://Moby.fi",
+    "likes": 2000
+}

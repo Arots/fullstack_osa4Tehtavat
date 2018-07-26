@@ -16,6 +16,7 @@ module.exports = Blog
 
 app.use(cors())
 app.use(bodyParser.json())
+require('dotenv').config()
 
 const mongoUrl = process.env.MONGODB_URI
 mongoose.connect(mongoUrl)
@@ -35,6 +36,17 @@ app.post('/api/blogs', (request, response) => {
     .save()
     .then(result => {
       response.status(201).json(result)
+    })
+})
+
+app.delete('api/blogs/:id', (req, res) => {
+  Blog
+    .findByIdAndRemove(req.params.id)
+    .then(result => {
+      res.status(204).end()
+    })
+    .catch(error => {
+      res.status(400).send({error: 'malformatted Id'})
     })
 })
 
