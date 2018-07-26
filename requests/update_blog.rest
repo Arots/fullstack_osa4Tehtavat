@@ -1,0 +1,9 @@
+PUT http://localhost:3003/api/blogs/5b59b7cb829847308425340f
+Content-Type: application/json
+
+{
+    "title": "Blim blom",
+    "author": "jani jonni",
+    "url": "tsing tsang",
+    "likes": 9
+}
