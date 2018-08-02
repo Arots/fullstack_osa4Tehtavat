@@ -2,7 +2,7 @@ const supertest = require('supertest')
 const {app, server} = require('../index')
 const api = supertest(app)
 const Blog = require('../models/blog')
-
+const helper = require('./test_helper')
 
 //beforeAll( async () => {
 //await Blog.remove({})
@@ -23,63 +23,92 @@ test('Blogs are returned, GET successful', async () => {
 	expect(result.body.length).toBe(5)
 }) */
 
-test('The post method works', async () => {
-	const newBlog = {
-		title: 'limbe lomb',
-		author: 'linka lanka',
-		url: 'http://ligelong.com',
-		likes: 29
-	}
-	
-	const initialLength = await api.get('/api/blogs')
+describe('when there are some note in the db', async () => {
 
-	await api
-		.post('/api/blogs')
-		.send(newBlog)
-		.expect(201)
-		.expect('Content-Type', /application\/json/)
-	
-	const contents = await api.get('/api/blogs')
+	test('The post method works', async () => {
+		const newBlog = {
+			title: 'limbe lomb',
+			author: 'linka lanka',
+			url: 'http://ligelong.com',
+			likes: 29
+		}
 
-	const mapping = contents.body.map(result => result.title)
+		const initialLength = await helper.blogsInDb()
 
-	expect(mapping).toContain('limbe lomb')
-	expect(contents.body.length).toBe(initialLength.body.length + 1)
-	
+		await api
+			.post('/api/blogs')
+			.send(newBlog)
+			.expect(201)
+			.expect('Content-Type', /application\/json/)
+
+		const contents = await helper.blogsInDb()
+
+		expect(contents.length).toBe(initialLength.length + 1)
+		const mapping = contents.map(result => result.title)
+		expect(mapping).toContain('limbe lomb')
+
+	})
 })
 
-test('A new blog must contain title and url', async () => {
-	const newBlog = {
-		atuhor: 'linke lonk',
-		likes: 99
-	}
-	
-	const initailBlogs = await api.get('/api/blogs')
+describe('addition of a new note', async () => {
 
-	await api
-		.post('/api/blogs')
-		.send(newBlog)
-		.expect(400)
-	
-	const resultBlogs = await api.get('/api/blogs')
-	expect(resultBlogs.body.length).toBe(initailBlogs.body.length)
+	test('A new blog must contain title and url', async () => {
+		const newBlog = {
+			atuhor: 'linke lonk',
+			likes: 99
+		}
+
+		const initailBlogs = await helper.blogsInDb()
+
+		await api
+			.post('/api/blogs')
+			.send(newBlog)
+			.expect(400)
+
+		const resultBlogs = await helper.blogsInDb()
+		expect(resultBlogs.length).toBe(initailBlogs.length)
+	})
+
+	test('If no likes are given we give it 0 likes', async () => {
+		const newBlog = {
+			title: 'Linge longe',
+			author: 'lombe lii',
+			url: 'Timoteusens.fi'
+		}
+
+		const resultBlog = await api
+			.post('/api/blogs')
+			.send(newBlog)
+			.expect(201)
+
+		expect(resultBlog.body.likes).toBe(0)
+	})
 })
 
-test('If no likes are given we give it 0 likes', async () => {
-	const newBlog = {
-		title: 'Linge longe',
-		author: 'lombe lii',
-		url: 'Timoteusens.fi'
-	}
+describe('deletion of a new note', async () => {
+	let blogToDelete
 
-	const resultBlog = await api
-		.post('/api/blogs')
-		.send(newBlog)
-		.expect(201)
-	
-	expect(resultBlog.body.likes).toBe(0)
+	beforeAll(async () => {
+		blogToDelete = new Blog({
+			title: 'This will soon be removed',
+			author: 'doesnt really matter',
+			url: 'www.whocares.com',
+			likes: 8
+		})
+		await blogToDelete.save() 
+	})
+
+	test('DELETE resource is succesful with a suitable statuscode', async () => {
+		const blogsAtStart = await helper.blogsInDb()
+
+		await api
+			.delete(`/api/blogs/${blogToDelete._id}`)
+			.expect(204)
+
+		const blogsAfterDelete = await helper.blogsInDb()
+		expect(blogsAfterDelete.length).toBe(blogsAtStart.length - 1)
+	})
 })
-
 
 afterAll(() => {
 	server.close()

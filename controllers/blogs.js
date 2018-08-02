@@ -33,7 +33,7 @@ blogRouter.post('/', async (request, response) => {
 
 	try {
 		if (request.body.title === undefined || request.body.url === undefined ) {
-			return response.status(400).send({errpr: 'Bad request'})
+			return response.status(400).send({error: 'Bad request'})
 		}
 		
 		const savedBlog = await blog.save()
@@ -41,7 +41,7 @@ blogRouter.post('/', async (request, response) => {
 			
 	} catch (exception) {
 		console.log(exception)
-		response.status(400).send({ error: 'Post didnt work' })
+		response.status(500).send({ error: 'Post didnt work' })
 	}
 })
 
