@@ -1,3 +1,4 @@
+const http = require('http')
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -20,6 +21,18 @@ app.use(bodyParser.json())
 app.use('/api/blogs', blogRouter)
 
 const PORT = config.port || 3003
-app.listen(PORT, () => {
+
+const server = http.createServer(app)
+
+server.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`)
 })
+
+server.on('close', () => {
+	mongoose.connection.close()
+})
+
+module.exports = {
+	app,
+	server
+}

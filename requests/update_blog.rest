@@ -1,9 +1,9 @@
-PUT http://localhost:3003/api/blogs/5b59b7cb829847308425340f
+PUT http://localhost:3001/api/blogs/5b605bfe24cf451974f20fcb
 Content-Type: application/json
 
 {
-    "title": "Blim blom",
-    "author": "jani jonni",
-    "url": "tsing tsang",
-    "likes": 9
+    "title": "tarinskisdkjsk",
+    "author": "farinskisadasdasdasd",
+    "url": "tsing tsangasdasdasd",
+    "likes": 9999
 }

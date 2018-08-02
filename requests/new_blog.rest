@@ -2,8 +2,8 @@ POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
-    "title": "JEA BOIJE",
-    "author": "NAIS",
-    "url": "http://lahmas.fi",
-    "likes": 9992
+    "title": "Mrasdsad",
+    "author": "uuguguguugg",
+    "url": "shakalakakaka",
+    "likes": 9998789
 }
