@@ -10,20 +10,20 @@ const helper = require('./test_helper')
 
 //})
 
-test('Blogs are returned, GET successful', async () => {
-
-	await api
-		.get('/api/blogs')
-		.expect(200)
-		.expect('Content-Type', /application\/json/)
-})
-
 /*test('There are five notes in the database', async () => {
 	const result = await api.get('/api/blogs')
 	expect(result.body.length).toBe(5)
 }) */
 
-describe('when there are some note in the db', async () => {
+describe('when there are some notes in the db', async () => {
+
+	test('Blogs are returned, GET successful', async () => {
+
+		await api
+			.get('/api/blogs')
+			.expect(200)
+			.expect('Content-Type', /application\/json/)
+	})
 
 	test('The post method works', async () => {
 		const newBlog = {
@@ -88,7 +88,7 @@ describe('addition of a new note', async () => {
 describe('deletion of a new note', async () => {
 	let blogToDelete
 
-	beforeAll(async () => {
+	beforeEach(async () => {
 		blogToDelete = new Blog({
 			title: 'This will soon be removed',
 			author: 'doesnt really matter',
@@ -108,6 +108,30 @@ describe('deletion of a new note', async () => {
 		const blogsAfterDelete = await helper.blogsInDb()
 		expect(blogsAfterDelete.length).toBe(blogsAtStart.length - 1)
 	})
+})
+
+describe('PUT method works and returns the correct statuscode', async () => {
+	test('testing for the PUT method', async () => {
+		const currentBlogs = await helper.blogsInDb()
+	
+		let blogToUpdate = {
+			title: 'TSALALONG',
+			author: 'TULIMON',
+			url: 'lobe liib',
+			likes: 987,
+			id: currentBlogs[currentBlogs.length - 1].id
+		}
+	
+		await api
+			.put(`/api/blogs/${blogToUpdate.id}`)
+			.send(blogToUpdate)
+			.expect(204)
+	
+		const blogsAfterUpdate = await helper.blogsInDb()
+		const mapped = blogsAfterUpdate.map(result => result.title)
+		expect(mapped).toContain('TSALALONG')
+	})
+
 })
 
 afterAll(() => {

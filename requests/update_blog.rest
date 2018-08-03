@@ -1,9 +1,10 @@
-PUT http://localhost:3001/api/blogs/5b605bfe24cf451974f20fcb
+PUT http://localhost:3001/api/blogs/5b62d9261f4d5f264c26415a
 Content-Type: application/json
 
 {
     "title": "tarinskisdkjsk",
     "author": "farinskisadasdasdasd",
     "url": "tsing tsangasdasdasd",
-    "likes": 9999
+    "likes": 9999,
+    "user": "5b641fb33a0b363978d3751b"
 }

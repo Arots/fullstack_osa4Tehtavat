@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 const blogRouter = require('./controllers/blogs')
+const userRouter = require('./controllers/users')
 const config = require('./utils/config')
 
 mongoose
@@ -19,6 +20,7 @@ mongoose
 app.use(cors())
 app.use(bodyParser.json())
 app.use('/api/blogs', blogRouter)
+app.use('/api/users', userRouter)
 
 const PORT = config.port || 3003
 
