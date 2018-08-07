@@ -1,11 +1,11 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImltYmVubyIsImlkIjoiNWI2OTJmNzkyNzRkYjUzZGVjYzMxMmViIiwiaWF0IjoxNTMzNjIyMDU5fQ.uoPSmzKjNAoqCOK5dPWbpfVE2mUHEDdKWZQ3wurf1uY
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNleFRpcHMiLCJpZCI6IjViNjk1ZWEzNjNmNmMyNGRjOGExM2FhOSIsImlhdCI6MTUzMzYzMjIyMn0.h7myq6W62XNlnetCUJl2_IOebhb4mj2QNYtYHUCdJwU
 
 {
-    "title": "tuling",
-    "author": "foulfing",
-    "url": "www.viikonloppu.fi/notInHy",
-    "likes": 666,
-    "userId": "5b692f79274db53decc312eb"
+    "title": "mikaels",
+    "author": "riemuava lava",
+    "url": "www.Kallis.fi/",
+    "likes": 1982,
+    "userId": "5b695ea363f6c24dc8a13aa9"
 }
