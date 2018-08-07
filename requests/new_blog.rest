@@ -1,10 +1,11 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImltYmVubyIsImlkIjoiNWI2OTJmNzkyNzRkYjUzZGVjYzMxMmViIiwiaWF0IjoxNTMzNjIyMDU5fQ.uoPSmzKjNAoqCOK5dPWbpfVE2mUHEDdKWZQ3wurf1uY
 
 {
-    "title": "BINGELONG",
-    "author": "FALFEL",
+    "title": "tuling",
+    "author": "foulfing",
     "url": "www.viikonloppu.fi/notInHy",
     "likes": 666,
-    "userId": "5b641fb33a0b363978d3751b"
+    "userId": "5b692f79274db53decc312eb"
 }
