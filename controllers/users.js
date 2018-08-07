@@ -4,7 +4,10 @@ const bcrypt = require('bcryptjs')
 
 userRouter.get('/', async (req, res) => {
 	try {
-		const users = await User.find({}, { passwordHash: 0 })
+		const users = await User
+			.find({}, { passwordHash: 0 })
+			.populate('blogs', { likes: 1, author: 1, title: 1, url: 1 })
+			
 		res.status(200).json(users.map(User.format))
 	} catch (expression) {
 		console.log(expression)
@@ -18,14 +21,14 @@ userRouter.post('/', async (req, res) => {
 	try {
 		const existingUser = await User.find({ username: body.username})
 
-		if (body.passwordHash.length < 3) {
+		if (body.password.length < 3) {
 			return res.status(400).send({ error: 'password is too short!'})
 		} else if (existingUser.length > 0) {
 			return res.status(400).send({ error: 'name must be unique'})
 		}
 
 		const saltRounds = 10
-		const passwordHash = await bcrypt.hash(body.passwordHash, saltRounds)
+		const passwordHash = await bcrypt.hash(body.password, saltRounds)
 		const newUser = new User({
 			username: body.username,
 			name: body.name,
