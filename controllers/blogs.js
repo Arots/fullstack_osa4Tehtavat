@@ -124,6 +124,9 @@ blogRouter.delete('/:id', async (req, res) => {
 		if ( userId.id.toString() === blog.user.toString() ) {
 			await Blog.findByIdAndRemove(req.params.id)
 			res.status(204).end()
+		} else if (blog.user === undefined || null) {
+			await Blog.findByIdAndRemove(req.params.id)
+			res.status(204).end()
 		} else {
 			res.status(400).json({ error: 'Ei toiminu deletet' })
 		}
