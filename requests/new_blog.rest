@@ -1,11 +1,11 @@
 POST http://localhost:3001/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlNleFRpcHMiLCJpZCI6IjViNjk1ZWEzNjNmNmMyNGRjOGExM2FhOSIsImlhdCI6MTUzMzYzMjIyMn0.h7myq6W62XNlnetCUJl2_IOebhb4mj2QNYtYHUCdJwU
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphbm5pIiwiaWQiOiI1YjZjMjkzN2ZhOWM1NDFkNWM3NTA0ZmYiLCJpYXQiOjE1MzM4MTUxMjZ9.w4LwFkpfC01Sutv5Mbafs1OT5x0TGcII8NtXPfADusg
 
 {
-    "title": "mikaels",
-    "author": "riemuava lava",
+    "title": "Turun juttu",
+    "author": "Riemuisa",
     "url": "www.Kallis.fi/",
     "likes": 1982,
-    "userId": "5b695ea363f6c24dc8a13aa9"
+    "user._id": "5b6c2937fa9c541d5c7504ff"
 }

@@ -46,7 +46,7 @@ blogRouter.post('/', async (request, response) => {
 			author: request.body.author,
 			url: request.body.url,
 			likes: request.body.likes ? request.body.likes : 0,
-			user: user._id
+			user: user
 		})
 		
 		const savedBlog = await blog.save()
@@ -71,21 +71,38 @@ blogRouter.put('/:id', async (req, res) => {
 	try {
 		const body = req.body
 
-		const user = await User.findById(body.userId)
+		/*const token = getTokenFrom(req)
+		const decodedToken = jwt.verify(token, process.env.SECRET)
+
+		if (!token || !decodedToken.id) {
+			return res.status(401).json({ error: 'token missing or invalid' })
+		}
+
+		if (req.body.title === undefined || req.body.url === undefined ) {
+			return res.status(400).send({error: 'Bad request'})
+		}
+
+		const user = await User.findById(decodedToken.id) */
+
+		const user = await User.findById(body.user)
 
 		const newBlog = {
 			title: body.title,
 			author: body.author,
 			url: body.url,
 			likes: body.likes,
-			user: user._id
+			user: user
 		}
 
 		await Blog.findByIdAndUpdate(req.params.id, newBlog)
 		res.status(204).json(Blog.format(newBlog))
 	} catch (exception) {
-		console.log(exception)
-		res.status(400).json({ error: 'malformatted Id' })
+		if (exception.name === 'JsonWebTokenError' ) {
+			res.status(401).json({ error: exception.message })
+		} else {
+			console.log(exception)
+			res.status(400).json({ error: 'malformatted Id' })
+		}
 	}
 })  
   
